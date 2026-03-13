@@ -17,7 +17,10 @@ async function buscarHoteis() {
 
       hotelElement.innerHTML = `
                 <h2>${dado.nome}</h2>
-                <p>Estrelas: ${dado.qtdEstrelas}</p>
+                <p>Estrelas: ${dado.qtdEstrelas}</p> 
+                <button onclick="mostrarDetalhes(${dado.id})">Ver Detalhes</button>
+                <div id="detalheshotel${dado.id}" style="display: none;">
+                </div>
             `;
       cardsContainer.appendChild(hotelElement);
     });
@@ -26,7 +29,6 @@ async function buscarHoteis() {
   }
 }
 buscarHoteis();
-
 
 async function cadastroHotel(event) {
   event.preventDefault();
@@ -39,7 +41,7 @@ async function cadastroHotel(event) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
+      body: JSON.stringify({
         nome: nome,
         qtdEstrelas: qtdEstrelas,
       }),
@@ -52,12 +54,48 @@ async function cadastroHotel(event) {
 
     formCadastro.reset();
     await buscarHoteis();
-
   } catch (error) {
     console.error("Erro:", error);
     alert("Erro ao cadastrar hotel: " + error.message);
   }
 }
-  formCadastro.addEventListener("submit", cadastroHotel);
-buscarHoteis();
+async function mostrarDetalhes(hotelId){
+const detalhesDiv = document.getElementById(`detalheshotel${hotelId}`);
+if(detalhesDiv.style.display === "none"){
+  detalhesDiv.style.display = "block";
+    mostrarQuarto(hotelId)
+}
+else{
+  detalhesDiv.style.display ="none";
+  detalhesDiv.innerHTML =""; //Limpa os detalhes para evitar duplicação
+}
+}
 
+async function mostrarQuarto(hotelId) {
+  try
+  {
+    const response = await fetch(`${hotelApiURL}/${hotelId}`);
+    if (response.ok){
+      const dados = await response.json();
+      console.log("quartos: ", dados.quartos);
+      const detalhesDiv = document.getElementById(`detalheshotel${hotelId}`);
+      let quartosHTML ="<h3>Quartos: </h3>";
+      console.log("quartos:", dados.quartos);
+      dados.quartos.forEach((quarto) => {
+        quartosHTML += `<div>
+          <h5>Tipo: ${quarto.tipo}</h5>
+          <p>Preço: R$${quarto.preco}</p>
+        </div>`;
+              detalhesDiv.innerHTML += quartosHTML;
+      });
+
+
+    }
+  }
+   catch (error){
+      console.log("Erro ao carregar quartos: ", error);
+    }
+}
+
+formCadastro.addEventListener("submit", cadastroHotel);
+buscarHoteis();

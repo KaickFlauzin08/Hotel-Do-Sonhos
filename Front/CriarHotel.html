@@ -5,90 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reservas de Hoteis</title>
     <style>
-      body {
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-color: #f0f2f5;
+Seu código atual tem uma estrutura funcional legal, mas o CSS pode ser otimizado para dar um ar mais "Premium" e moderno.
+
+Abaixo, preparei uma versão Clean & Modern, focada em tipografia legível, cores suaves e um sistema de cards que realmente se destaca. Também corrigi um pequeno detalhe no seu JavaScript: na função mostrarQuarto, o HTML estava sendo acumulado de forma errada dentro do loop, o que causava repetições visuais.
+
+O Novo CSS (Substitua o conteúdo da sua tag <style>)
+CSS
+:root {
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --bg-body: #f8fafc;
+  --text-main: #1e293b;
+  --text-muted: #64748b;
+  --white: #ffffff;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-main);
   margin: 0;
+  padding: 40px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
 }
 
+/* Formulário Elegante */
 form {
-  background: #ffffff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  background: var(--white);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: var(--shadow);
   width: 100%;
-  max-width: 350px;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 40px;
+  gap: 15px;
+  margin-bottom: 50px;
 }
 
 input {
-  padding: 12px 15px;
-  border: 1px solid #dcdfe6;
-  border-radius: 6px;
-  font-size: 15px;
-  outline: none;
-  transition: border-color 0.2s;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.3s ease;
 }
 
 input:focus {
-  border-color: #2ecc71;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  outline: none;
 }
 
 button {
-  background-color: #2ecc71;
-  color: white;
-  border: none;
-  padding: 14px;
-  border-radius: 6px;
+  background-color: var(--primary);
+  color: rgb(0, 0, 0);
+  padding: 12px;
+  border-radius: 8px;
   font-weight: 600;
-  font-size: 16px;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.3s;
 }
 
 button:hover {
-  background-color: #27ae60;
+  background-color: var(--primary-hover);
 }
 
+/* Grid de Cards */
 #cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
   width: 100%;
-  max-width: 1100px;
+  max-width: 1200px;
 }
 
-#cards div {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  border-top: 4px solid #2ecc71;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  transition: transform 0.2s;
+#cards > div {
+  background: var(--white);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid #f1f5f9;
 }
 
-#cards div:hover {
-  transform: translateY(-5px);
+/* Estilização dos Detalhes (Quartos) */
+.detalhes-container {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px dashed #e2e8f0;
 }
 
-h2 {
-  margin: 0 0 8px 0;
-  font-size: 1.25rem;
-  color: #2c3e50;
+.quarto-item {
+  background: #f1f5f9;
+  margin: 8px 0;
+  padding: 10px;
+  border-radius: 6px;
 }
 
-p {
-  margin: 0;
-  color: #7f8c8d;
-  font-size: 1rem;
-}
+.quarto-item h5 { margin: 0; color: var(--primary); }
+.quarto-item p { margin: 4px 0 0 0; font-size: 0.9rem; }
+
+h2 { margin: 0 0 10px 0; font-size: 1.4rem; }
+p { color: var(--text-muted); margin-bottom: 15px; }
     </style>
   </head>
   <body>
